@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>JSF Refresher Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        .card { max-width: 700px; padding: 1.2rem; border: 1px solid #ccc; border-radius: 8px; }
+        .row { margin-bottom: 1rem; }
+        .label { display: inline-block; width: 120px; font-weight: bold; }
+        .msg { margin-top: 1rem; padding: 0.8rem; background: #f6f6f6; border-radius: 6px; }
+        .small { color: #555; font-size: 0.95rem; }
+        .buttons > * { margin-right: 0.6rem; }
+    </style>
+</h:head>
+<h:body>
+    <div class="card">
+        <h1>JSF refresher demo</h1>
+        <p class="small">
+            This page demonstrates Facelets, a CDI-backed bean, EL expressions,
+            postback handling, and view scope.
+        </p>
+
+        <h:form>
+            <div class="row">
+                <span class="label">Your name:</span>
+                <h:inputText value="#{helloBean.name}" />
+            </div>
+
+            <div class="row buttons">
+                <h:commandButton value="Say hello" action="#{helloBean.greet}" />
+                <h:commandButton value="Reset" action="#{helloBean.reset}" immediate="true" />
+            </div>
+
+            <div class="row">
+                <strong>Local clicks (view scope):</strong>
+                <h:outputText value="#{helloBean.localClicks}" />
+                <br/>
+                <strong>Application clicks (application scope service):</strong>
+                <h:outputText value="#{helloBean.applicationClicks}" />
+            </div>
+
+            <h:panelGroup rendered="#{not empty helloBean.message}" layout="block" styleClass="msg">
+                <h:outputText value="#{helloBean.message}" />
+            </h:panelGroup>
+        </h:form>
+    </div>
+</h:body>
+</html>
