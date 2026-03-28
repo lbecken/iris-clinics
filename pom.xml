@@ -13,13 +13,16 @@
         <maven.compiler.release>21</maven.compiler.release>
         <jakartaee.version>10.0.0</jakartaee.version>
         <wildfly.plugin.version>5.1.5.Final</wildfly.plugin.version>
+        <wildfly.datasources.galleon-pack.version>10.0.0.Final</wildfly.datasources.galleon-pack.version>
     </properties>
 
     <dependencies>
         <!-- WildFly provides Jakarta EE APIs at runtime -->
+        <!-- 'web' profile: no JMS -->
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <!--artifactId>jakarta.jakartaee-api</artifactId-->
             <version>${jakartaee.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -28,6 +31,7 @@
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
+            <!-- compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -37,6 +41,7 @@
                 </configuration>
             </plugin>
 
+            <!-- war -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -56,10 +61,32 @@
                         <feature-pack>
                             <location>wildfly@maven(org.jboss.universe:community-universe)</location>
                         </feature-pack>
+                        <feature-pack>
+                            <location>org.wildfly:wildfly-datasources-galleon-pack:${wildfly.datasources.galleon-pack.version}</location>
+                        </feature-pack>
                     </feature-packs>
                     <layers>
                         <layer>jsf</layer>
+                        <layer>jpa</layer>
+                        <layer>postgresql-datasource</layer>
+                        <!-- required to run wildfly through maven plugin and avoid plugin start check timeout (wildfly start) -->
+                        <layer>management</layer>
                     </layers>
+                    <env>
+                        <!-- Wildfly will look for these System Properties or Env Vars at runtime -->
+                        <POSTGRESQL_USER>${env.DB_USER}</POSTGRESQL_USER>
+                        <POSTGRESQL_PASSWORD>${env.DB_PASSWORD}</POSTGRESQL_PASSWORD>
+                        <POSTGRESQL_HOST>${env.DB_HOST}</POSTGRESQL_HOST>
+                        <POSTGRESQL_PORT>${env.DB_PORT}</POSTGRESQL_PORT>
+                        <POSTGRESQL_DATABASE>${env.DB_NAME}</POSTGRESQL_DATABASE>
+                    </env>
+                    <!--env>
+                        <POSTGRESQL_USER>jsf_user</POSTGRESQL_USER>
+                        <POSTGRESQL_PASSWORD>jsf_pass</POSTGRESQL_PASSWORD>
+                        <POSTGRESQL_HOST>localhost</POSTGRESQL_HOST>
+                        <POSTGRESQL_PORT>5432</POSTGRESQL_PORT>
+                        <POSTGRESQL_DATABASE>jsf_demo</POSTGRESQL_DATABASE>
+                    </env-->
                     <bootable-jar>true</bootable-jar>
                     <bootable-jar-name>${project.artifactId}-bootable.jar</bootable-jar-name>
                 </configuration>

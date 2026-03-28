@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+   <title>IRIS</title>
+   <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      .card { max-width: 700px; padding: 1.2rem; border: 1px solid #ccc; border-radius: 8px; }
+      .row { margin-bottom: 1rem; }
+      .label { display: inline-block; width: 120px; font-weight: bold; }
+      .small { color: #555; font-size: 0.95rem; }
+      .buttons > * { margin-right: 0.6rem; }
+      table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+      th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+      th { background: #f0f0f0; }
+      .actions a, .actions input { margin-right: 0.4rem; }
+   </style>
+</h:head>
+<h:body>
+   <div class="card">
+      <h1>IRIS</h1>
+      <p class="small">
+         This is the login page for Iris
+      </p>
+
+      <h:form>
+         <!-- Create / Edit form -->
+         <h2>#{loginBean.loggedIn ? 'Logged' : 'Not Logged'}</h2>
+         <div class="row">
+            <span class="label">Name:</span>
+            <h:inputText value="#{loginBean.username}" required="true" size="20"/>
+         </div>
+         <div class="row">
+            <span class="label">Password:</span>
+            <h:inputText value="#{loginBean.password}" required="true" size="20"/>
+         </div>
+         <div class="row buttons">
+            <h:commandButton value="Login" action="#{loginBean.login}" />
+            <h:commandButton value="Reset" action="#{loginBean.reset}" immediate="true" />
+         </div>
+      </h:form>
+   </div>
+</h:body>
+</html>

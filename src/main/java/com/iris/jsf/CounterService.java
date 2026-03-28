@@ -1,4 +1,4 @@
-package com.example.jsf;
+package com.iris.jsf;
 
 // javarta.*
 import jakarta.enterprise.context.ApplicationScoped;

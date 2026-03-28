@@ -5,6 +5,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Run Commands
 
 ```bash
+# Start PostgreSQL (required for JPA features)
+docker compose up -d
+
 # Build the WAR
 mvn clean install
 
@@ -24,7 +27,9 @@ This is a minimal Jakarta Faces (JSF) web application packaged as a WAR, targeti
 
 - **View layer:** Facelets (`.xhtml` files in `src/main/webapp/`)
 - **Managed beans:** CDI-managed beans in `com.example.jsf` package using Jakarta EE annotations (`@ViewScoped`, `@ApplicationScoped`, `@Named`, `@Inject`)
-- **Server:** WildFly (provisioned automatically via `wildfly-maven-plugin` v5.1.5.Final with a minimal JSF-only layer)
+- **Server:** WildFly (provisioned automatically via `wildfly-maven-plugin` v5.1.5.Final with JSF + JPA layers)
+- **Database:** PostgreSQL 17 via Docker, configured through `wildfly-datasources-galleon-pack` (auto-registers `java:jboss/datasources/PostgreSQLDS`)
+- **JPA:** Hibernate (provided by WildFly), persistence unit `jsf-demo-pu` in `src/main/resources/META-INF/persistence.xml`
 - **CDI discovery:** `annotated` mode (only explicitly annotated beans are discovered — see `beans.xml`)
 - **No faces-config.xml** — all JSF configuration is annotation-driven
 
@@ -32,3 +37,6 @@ This is a minimal Jakarta Faces (JSF) web application packaged as a WAR, targeti
 
 - `HelloBean` (`@ViewScoped`) — form-backing bean that injects `CounterService`, demonstrates view-scoped state and action methods
 - `CounterService` (`@ApplicationScoped`) — thread-safe singleton using `AtomicInteger`, shared across all views
+- `Greeting` (`@Entity`) — JPA entity mapped to `greeting` table in PostgreSQL
+- `GreetingService` (`@ApplicationScoped`) — CRUD operations for `Greeting` using `EntityManager`
+- `GreetingBean` (`@ViewScoped`) — backing bean for the greetings CRUD page

@@ -3,7 +3,7 @@
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core">
 <h:head>
-    <title>JSF Refresher Demo</title>
+    <title>IRIS</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 2rem; }
         .card { max-width: 700px; padding: 1.2rem; border: 1px solid #ccc; border-radius: 8px; }
@@ -16,10 +16,9 @@
 </h:head>
 <h:body>
     <div class="card">
-        <h1>JSF refresher demo</h1>
+        <h1>IRIS</h1>
         <p class="small">
-            This page demonstrates Facelets, a CDI-backed bean, EL expressions,
-            postback handling, and view scope.
+            This is the login page of Iris
         </p>
 
         <!-- Form -->
@@ -46,6 +45,10 @@
                 <h:outputText value="#{helloBean.message}" />
             </h:panelGroup>
         </h:form>
+
+        <p style="margin-top: 1.5rem;">
+            <h:link value="Greetings CRUD demo (JPA + PostgreSQL)" outcome="greetings" />
+        </p>
     </div>
 </h:body>
 </html>

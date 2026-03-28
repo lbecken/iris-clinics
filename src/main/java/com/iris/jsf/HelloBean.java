@@ -1,4 +1,4 @@
-package com.example.jsf;
+package com.iris.jsf;
 
 // jakarta.*
 import jakarta.faces.view.ViewScoped;
