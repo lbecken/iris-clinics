@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: iris-postgres
+    environment:
+      # database admin user
+      POSTGRES_USER: iris
+      POSTGRES_PASSWORD: iris
+      POSTGRES_DB: iris
+      # schema application user
+      #APP_DB_USER: iris
+      #APP_DB_PASSWORD: iris
+      #APP_DB_SCHEMA: iris
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../pgdata:/var/lib/postgresql/data
+      - ./src/main/resources/db:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+
+#volumes:
+#  pgdata:

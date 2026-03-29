@@ -21,6 +21,8 @@ public class AppointmentRepository {
         return em.createQuery("""
             SELECT a
             FROM Appointment a
+            JOIN FETCH a.patient
+            JOIN FETCH a.doctor
             ORDER BY a.appointmentDate DESC
         """).getResultList();
     }

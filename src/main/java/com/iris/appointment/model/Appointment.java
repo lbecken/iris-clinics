@@ -43,4 +43,12 @@ public class Appointment {
     public LocalDateTime getAppointmentDate() {
         return appointmentDate;
     }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
 }

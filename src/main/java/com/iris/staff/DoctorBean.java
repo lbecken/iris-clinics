@@ -28,4 +28,10 @@ public class DoctorBean implements Serializable {
     public List<Doctor> getDoctors() {
         return doctors;
     }
+
+    public String setDoctorActive(Long doctorId, Boolean isActive) {
+        doctorService.setDoctorActive(doctorId, isActive);
+        doctors = doctorService.getDoctors();
+        return null;
+    }
 }
