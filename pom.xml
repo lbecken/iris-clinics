@@ -75,10 +75,19 @@
                     <layers>
                         <layer>jsf</layer>
                         <layer>jpa</layer>
+                        <layer>ee-security</layer>
                         <layer>postgresql-datasource</layer>
                         <!-- required to run wildfly through maven plugin and avoid plugin start check timeout (wildfly start) -->
                         <layer>management</layer>
+                        <layer>jaxrs</layer>
                     </layers>
+                    <packaging-scripts>
+                        <packaging-script>
+                            <scripts>
+                                <script>src/main/scripts/configure-security.cli</script>
+                            </scripts>
+                        </packaging-script>
+                    </packaging-scripts>
                     <env>
                         <!-- Wildfly will look for these System Properties or Env Vars at runtime -->
                         <POSTGRESQL_USER>${env.DB_USER}</POSTGRESQL_USER>

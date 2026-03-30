@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="jakarta.faces.facelets">
 <h:head>
    <title>IRIS</title>
@@ -30,15 +31,15 @@
          <h2>#{loginBean.loggedIn ? 'Logged' : 'Not Logged'}</h2>
          <div class="row">
             <span class="label">Name:</span>
-            <h:inputText value="#{loginBean.username}" required="true" size="20"/>
+            <p:inputText value="#{loginBean.username}" required="true" size="20"/>
          </div>
          <div class="row">
             <span class="label">Password:</span>
-            <h:inputText value="#{loginBean.password}" required="true" size="20"/>
+            <p:inputText value="#{loginBean.password}" required="true" size="20"/>
          </div>
          <div class="row buttons">
-            <h:commandButton value="Login" action="#{loginBean.login}" />
-            <h:commandButton value="Reset" action="#{loginBean.reset}" immediate="true" />
+            <p:commandButton value="Login" action="#{loginBean.login}" ajax="false" />
+            <p:commandButton value="Reset" action="#{loginBean.reset}" immediate="true" />
          </div>
       </h:form>
    </div>

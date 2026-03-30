@@ -1,0 +1,4 @@
+# Enable Jakarta Security (JASPI) for web deployments
+# integrated-jaspi=false: roles from CredentialValidationResult are used directly by the Servlet container
+# integrated-jaspi=true would route roles through Elytron's role mappers, which requires additional config
+/subsystem=undertow/application-security-domain=other:add(security-domain=ApplicationDomain, integrated-jaspi=false, enable-jaspi=true)

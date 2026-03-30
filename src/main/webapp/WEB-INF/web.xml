@@ -20,4 +20,29 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected</web-resource-name>
+            <url-pattern>/patient/*</url-pattern>
+            <url-pattern>/staff/*</url-pattern>
+            <url-pattern>/appointment/*</url-pattern>
+            <!--url-pattern>/api/*</url-pattern-->
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+            <role-name>SECRETARY</role-name>
+            <role-name>DOCTOR</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <!-- explicit declaration is not mandatory -->
+    <security-role>
+        <role-name>ADMIN</role-name>
+    </security-role>
+    <security-role>
+        <role-name>SECRETARY</role-name>
+    </security-role>
+    <security-role>
+        <role-name>DOCTOR</role-name>
+    </security-role>
 </web-app>

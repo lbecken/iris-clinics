@@ -5,13 +5,23 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="../main.xhtml">
     <ui:define name="header">
        <div>
-           <p:link value="Patients" outcome="/patient/patients-list"/> |
-           <p:link value="Doctors" outcome="/staff/doctors-list"/> |
-           <p:link value="Appointments" outcome="/appointment/appointments-list"/>
+           <p:link value="Patients" outcome="/patient/patients-list"
+                   styleClass="#{fn:startsWith(view.viewId, '/patient/') ? 'active-menu' : ''}"
+                   rendered="#{request.isUserInRole('ADMIN') or request.isUserInRole('SECRETARY')}"/> |
+           <p:link value="Doctors" outcome="/staff/doctors-list"
+                   styleClass="#{fn:startsWith(view.viewId, '/staff/') ? 'active-menu' : ''}"
+                   rendered="#{loginBean.admin}"/> |
+           <p:link value="Appointments" outcome="/appointment/appointments-list"
+                   styleClass="#{fn:startsWith(view.viewId, '/appointment/') ? 'active-menu' : ''}"
+                   rendered="#{request.isUserInRole('ADMIN') or request.isUserInRole('SECRETARY')}"/>
+           <h:form style="display:inline">
+               <p:commandButton value="Logout" action="#{loginBean.logout}" ajax="false"/>
+           </h:form>
        </div>
     </ui:define>
     <ui:define name="footer">
