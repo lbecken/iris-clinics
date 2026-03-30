@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian
+                  http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <container qualifier="wildfly-managed" default="true">
+        <configuration>
+            <!-- Points to the WildFly provisioned by wildfly-maven-plugin -->
+            <property name="jbossHome">target/server</property>
+            <!-- Pass the DB env vars so the datasource works -->
+            <property name="javaVmArguments">
+                -DPOSTGRESQL_USER=${env.DB_USER}
+                -DPOSTGRESQL_PASSWORD=${env.DB_PASSWORD}
+                -DPOSTGRESQL_HOST=${env.DB_HOST}
+                -DPOSTGRESQL_PORT=${env.DB_PORT}
+                -DPOSTGRESQL_DATABASE=${env.DB_NAME}
+            </property>
+        </configuration>
+    </container>
+</arquillian>

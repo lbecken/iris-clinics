@@ -16,6 +16,19 @@
         <wildfly.datasources.galleon-pack.version>10.0.0.Final</wildfly.datasources.galleon-pack.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- Arquillian: integration tests -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.9.1.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- WildFly provides Jakarta EE APIs at runtime -->
         <!-- 'web' profile: no JMS -->
@@ -32,6 +45,50 @@
             <artifactId>primefaces</artifactId>
             <version>14.0.0</version>
             <classifier>jakarta</classifier>
+        </dependency>
+        <!-- Test dependencies -->
+        <!-- JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.3</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Mockito -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.14.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- bridge Mockito-JUnit 5 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.14.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Arquillian + JUnit 5 -->
+        <dependency>
+            <groupId>org.jboss.arquillian.junit5</groupId>
+            <artifactId>arquillian-junit5-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- WildFly managed container adapter -->
+        <dependency>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-container-managed</artifactId>
+            <version>5.1.0.Beta4</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- ShrinkWrap resolver (to include Maven dependencies in the test deployment) -->
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <!-- not covered by Arquillian BOM => needs explicit version -->
+            <version>3.3.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -110,6 +167,29 @@
                     <execution>
                         <goals>
                             <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Surefire: run JUnit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+                <configuration>
+                    <argLine>--add-opens java.base/java.lang=ALL-UNNAMED</argLine>
+                </configuration>
+            </plugin>
+            <!-- Failsafe: run Arquillian/JUnit integration tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.5.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
                         </goals>
                     </execution>
                 </executions>
